@@ -39,3 +39,11 @@
   template: src=rbenv.sh.j2 dest=/etc/profile.d/rbenv.sh owner=root group=root mode=0755
   sudo: true
   tags: install_rbenv_init_to_profile
+
+- name: set gemrc
+  copy: src=gemrc dest=~/.gemrc
+  with_items: rbenv_users
+  sudo: true
+  sudo_user: "{{ item }}"
+  ignore_errors: true
+  tags: setting_user_gemrc
